@@ -24,7 +24,13 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DateTimePicker-->
-    <link href="datetimepicker/jquery.datetimepicker.css" rel="stylesheet"></script>
+    <link href="libraries/datetimepicker/jquery.datetimepicker.css" rel="stylesheet">
+
+    <!-- DateTimePicker-->
+    <link href="libraries/sweetalert/sweetalert.css" type="text/css" rel="stylesheet">
+
+    <!-- Chosen -->
+    <link href="libraries/chosen/chosen.min.css" type="text/css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,7 +38,22 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
 
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+</style>
 </head>
 
 <body>
@@ -266,56 +287,36 @@
                             <div class="panel-body">
                                 <div class="form-group col-lg-6">
                                     <label>Show</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="showddl">
+                                        <option value="All" selected>All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Show Date</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="showdateddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Sold By</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="soldbyddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>PT By</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="ptbyddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-4">
                                     <label>Price Type</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="pricetypeddl">
+                                        <option value="All">All</option>
                                     </select>
                                 <div class="checkbox-inline">
                                     <label>
-                                        <input type="checkbox" value="">Is Bulk Order
+                                        <input type="checkbox" value="" id="isbulkCheck" checked>Is Bulk Order
                                     </label>
                                 </div>
                                 </div>
@@ -331,22 +332,21 @@
                                     </div>
                                 </div>
                                     <div class="col-lg-12">
-                                        <button class="btn btn-lg btn-info col-lg-12">Search</button>
+                                        <button class="btn btn-lg btn-info col-lg-12" id="searchButton"></span>Search</button>
                                     </div>
                             </div>
                             </div>     
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
+                            <table class="table table-bordered table-hover table-striped" id="tmstbl">
                                 <thead>
                                     <tr>
                                         <th>Ticket #</th>
-                                        <th>Date</th>
+                                        <th>Date Bought</th>
                                         <th>Name</th>
                                         <th>Price Type</th>
                                         <th>ID Number</th>
@@ -358,90 +358,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="active">
-                                        <td>001</td>
-                                        <td>Aug 20</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr class="success">
-                                        <td>002</td>
-                                        <td>Aug 20</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr class="warning">
-                                        <td>003</td>
-                                        <td>Aug 20</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr class="danger">
-                                        <td>004</td>
-                                        <td>Aug 20</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr>
-                                        <td>005</td>
-                                        <td>Aug 20</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr>
-                                        <td>006</td>
-                                        <td>Aug 21</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
-                                    <tr>
-                                        <td>007</td>
-                                        <td>Aug 21</td>
-                                        <td>George Vasquez II</td>
-                                        <td>A</td>
-                                        <td>11125136</td>
-                                        <td>BSINSYS</td>
-                                        <td>09054250114</td>
-                                        <td>TS</td>
-                                        <td>Josh</td>
-                                        <td>YES</td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -451,12 +368,12 @@
                 <div class="row pull-right">
                     <button type="button" class="btn btn-lg btn-success">Export Ticket Monitoring Sheet</button>
                 </div>
+                <table id="srtms" hidden></table>
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
-
+        
     </div>
     <div id="tableFormat" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -492,9 +409,6 @@
                     </tr>
                     <tr>
                             <td><input type="checkbox" value="" id="idcheck" checked><label for="idcheck">ID Number</label></td>
-                            <td><input type="checkbox" value="" id="acheck" checked><label for="acheck">Attendance</label></td>
-                    </tr>
-                    <tr>
                             <td><input type="checkbox" value="" id="dccheck" checked><label for="dccheck">Degree Code</label></td>
                     </tr>
                 </table>
@@ -514,18 +428,23 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
     <!-- DateTime Picker-->
-    <script src="datetimepicker/jquery.datetimepicker.js"></script>
+    <script src="libraries/datetimepicker/jquery.datetimepicker.js"></script>
+
+    <!-- Sheetrock -->
+    <script src="libraries/sheetrock/sheetrock.min.js"></script> 
+
+    <!-- Sweet Alert-->
+    <script src="libraries/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Chosen -->
+    <script src="libraries/chosen/chosen.jquery.min.js"></script>
 
     <!-- Application-->
+    <script src="application/config.js"></script>
+    <script src="application/model/tms-model.js"></script>
     <script src="application/control/tms-control.js"></script>
     <script src="application/view/tms-view.js"></script>
-    <script src="application/model/tms-model.js"></script>
 </body>
 
 </html>
