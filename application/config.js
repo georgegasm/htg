@@ -12,3 +12,6 @@ var showticketmonitoringsheet = 1;
 
 var incentivesmasterlist = "https://docs.google.com/spreadsheets/d/1xeNTKqhWX5LwkfAfDuoPsO7UjSQ_5mqcgg6UaiKX4f4/edit#gid=0";
 var showincentivesmasterlist = 1;
+
+var professorsincentiveslist = "https://docs.google.com/spreadsheets/d/1FckMvdB_uCUKbLuy0lnZWmnPbdRgqrrlfhIDjVT0kk0/edit#gid=0";
+var showprofessorsincentiveslist = 1;
