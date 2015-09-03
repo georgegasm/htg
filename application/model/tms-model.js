@@ -14,7 +14,7 @@ var Class = function(methods) {
 };
 
 var Student = Class({
-	initialize: function(show, showDate, dateBought, ticketNumber, priceType, name, idNumber, degreeCode, contactNumber, soldBy, ptBy, bulk, attendance, incentive){
+	initialize: function(show, showDate, dateBought, ticketNumber, priceType, name, idNumber, degreeCode, contactNumber, soldBy, ticketType, bulkNumber, attendance, incentive){
 		this.show = show,
 		this.showDate = showDate,
 		this.dateBought = dateBought,
@@ -25,8 +25,8 @@ var Student = Class({
 		this.degreeCode = degreeCode,
 		this.contactNumber = contactNumber,
 		this.soldBy = soldBy,
-		this.ptBy = ptBy,
-		this.bulk = bulk,
+		this.ticketType = ticketType,
+		this.bulkNumber = bulkNumber,
 		this.attendance = attendance,
 		this.incentive = incentive
 	}

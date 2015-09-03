@@ -15,11 +15,10 @@ function initSpreadSheet(){
 	var showstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
 	var showdatestr = ($('#showdateddl').val() == "All"?"":" AND B = '" +$('#showdateddl').val() +"'");
 	var soldbystr = ($('#soldbyddl').val() == "All"?"":" AND J = '" +$('#soldbyddl').val() +"'");
-	var ptbystr = ($('#ptbyddl').val() == "All"?"":" AND K = '" +$('#ptbyddl').val() +"'");
+	var tickettypestr = ($('#tickettypeddl').val() == "All"?"":" AND K = '" +$('#tickettypeddl').val() +"'");
 	var pricetypestr = ($('#pricetypeddl').val() == "All"?"":" AND E = '" +$('#pricetypeddl').val() +"'");
-	var bulkstr = (!$('#isbulkCheck').is(":checked")?" AND L = 'NO'":" AND L = 'YES'");
-	//var fromdatestr = ($('#fromDate').val() == ""?"":" AND B > " +$('#showdateddl').val());
-	var querystr = "SELECT * WHERE 1=1 " +showstr +showdatestr +soldbystr +ptbystr +pricetypestr +bulkstr;
+	var bulkstr = ($('#bulknumberddl').val() == "All"?"":" AND L = '" + $('#bulknumberddl').val() + "'");
+	var querystr = "SELECT * WHERE 1=1 " +showstr +showdatestr +soldbystr +tickettypestr +pricetypestr +bulkstr;
 	loadingSearchButton(true);
 	$('#srtms').empty();
 	$('#srtms').sheetrock({
@@ -40,8 +39,9 @@ function initChosenDDL(){
 	$('#showddl').chosen({width: "100%"});
 	$('#showdateddl').chosen({width: "100%"});
 	$('#soldbyddl').chosen({width: "100%"});
-	$('#ptbyddl').chosen({width: "100%"});
+	$('#tickettypeddl').chosen({width: "100%"});
 	$('#pricetypeddl').chosen({width: "100%"});
+	$('#bulknumberddl').chosen({width: "100%"});
 }
 
 function assignTableData(error){
@@ -89,9 +89,9 @@ function assignTableData(error){
 		cell  = newRow.insertCell(7);
 		text  = document.createTextNode(studentList[x].soldBy); cell.appendChild(text);
 		cell  = newRow.insertCell(8);
-		text  = document.createTextNode(studentList[x].ptBy); cell.appendChild(text);
+		text  = document.createTextNode(studentList[x].ticketType); cell.appendChild(text);
 		cell  = newRow.insertCell(9);
-		text  = document.createTextNode(studentList[x].bulk); cell.appendChild(text);
+		text  = document.createTextNode(studentList[x].bulkNumber); cell.appendChild(text);
 	}
 }
 
@@ -128,13 +128,14 @@ function checkDateFilter(date){
 
 function fillFilters(){
 	var x = 0;
-	var showArr = [], showdateArr = [], soldbyArr = [], ptbyArr = [], pricetypeArr = [];
+	var showArr = [], showdateArr = [], soldbyArr = [], tickettypeArr = [], pricetypeArr = [], bulknumberArr = [];
 	for(x; x < studentList.length; x++){
 		if($.inArray(studentList[x].show, showArr) == -1) showArr.push(studentList[x].show);
 		if($.inArray(studentList[x].showDate, showdateArr) == -1) showdateArr.push(studentList[x].showDate);
 		if($.inArray(studentList[x].soldBy, soldbyArr) == -1) soldbyArr.push(studentList[x].soldBy);
-		if($.inArray(studentList[x].ptBy, ptbyArr) == -1) ptbyArr.push(studentList[x].ptBy);
+		if($.inArray(studentList[x].ticketType, tickettypeArr) == -1) tickettypeArr.push(studentList[x].ticketType);
 		if($.inArray(studentList[x].priceType, pricetypeArr) == -1) pricetypeArr.push(studentList[x].priceType);
+		if($.inArray(studentList[x].bulkNumber, bulknumberArr) == -1) bulknumberArr.push(studentList[x].bulkNumber);
 	}
 	var option = '';
 
@@ -156,17 +157,22 @@ function fillFilters(){
 	$('#soldbyddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
 	$('#soldbyddl').append(option);$("#soldbyddl").trigger("chosen:updated");option = '';
 	
-	for (var i=0;i<ptbyArr.length;i++){
-	   option += '<option value="'+ ptbyArr[i] + '">' + ptbyArr[i] + '</option>';
+	for (var i=0;i<tickettypeArr.length;i++){
+	   option += '<option value="'+ tickettypeArr[i] + '">' + tickettypeArr[i] + '</option>';
 	}
-	$('#ptbyddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
-	$('#ptbyddl').append(option);$("#ptbyddl").trigger("chosen:updated");option = '';
+	$('#tickettypeddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#tickettypeddl').append(option);$("#tickettypeddl").trigger("chosen:updated");option = '';
 	
 	for (var i=0;i<pricetypeArr.length;i++){
 	   option += '<option value="'+ pricetypeArr[i] + '">' + pricetypeArr[i] + '</option>';
 	}
 	$('#pricetypeddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
 	$('#pricetypeddl').append(option);$("#pricetypeddl").trigger("chosen:updated");option = '';
+	for (var i=0;i<bulknumberArr.length;i++){
+	   option += '<option value="'+ bulknumberArr[i] + '">' + bulknumberArr[i] + '</option>';
+	}
+	$('#bulknumberddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#bulknumberddl').append(option);$("#bulknumberddl").trigger("chosen:updated");option = '';
 }
 
 function loadingSearchButton(bool){
