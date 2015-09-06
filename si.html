@@ -24,7 +24,7 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DateTimePicker-->
-    <link href="datetimepicker/jquery.datetimepicker.css" rel="stylesheet"></script>
+    <link href="libraries/datetimepicker/jquery.datetimepicker.css" rel="stylesheet"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -209,12 +209,12 @@
                                 <a href="tms.html">Ticket Monitoring Sheet</a>
                             </li>
                             <li>
-                                <a href="#">Income Statement</a>
+                                <a href="#">Dropdown Item</a>
                             </li>
                         </ul>
                     </li>
                     <li class="active">
-                        <a href="javascript:;" data-toggle="collapse" data-target="#marketingList"><i class="fa fa-fw fa-ticket"></i> Marketing </a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#marketingList" id="activeDivision"><i class="fa fa-fw fa-ticket"></i> Marketing </a>
                         <ul id="marketingList" class="collapse">
                             <li>
                                 <a href="si.html">Show Incentives</a>
@@ -234,7 +234,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
+                <div class="row" id="page-header">
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Show Incentives <small>Marketing</small>
@@ -254,15 +254,98 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
+                        <div class="panel panel-success">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="professorToggle">
+                            <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                        Professors and Incentives  <i class="fa fa-arrow-down"></i>
+                                  </h4>
+                              </div>
+                            </a>
+                            <div id="collapseOne" class="panel-collapse collapse out">
+                                <div class="panel-body">
+                                    <div class="form-group col-lg-6">
+                                        <label>Show</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label>Department</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label>Subject</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label>Section</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <label>Name</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Professor</th>
+                                                        <th>Department</th>
+                                                        <th>Incentives</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="panel panel-info">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" id="filterToggle">
                               <div class="panel-heading">
                                   <h4 class="panel-title">
                                         Filters  <i class="fa fa-arrow-down"></i>
                                   </h4>
                               </div>
                             </a>
-                            <div id="collapseOne" class="panel-collapse collapse out">
+                            <div id="collapseTwo" class="panel-collapse collapse out">
                             <div class="panel-body">
                                 <div class="form-group col-lg-6">
                                     <label>Show</label>
@@ -314,8 +397,8 @@
                                         <option>5</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-3">
-                                    <label>Number of Incentives</label>
+                                <div class="form-group col-lg-12">
+                                    <label>Search Name or ID Number</label>
                                     <select class="form-control">
                                         <option>1</option>
                                         <option>2</option>
@@ -326,10 +409,6 @@
                                     <label>
                                         <input type="checkbox" value="">Attended
                                     </label>
-                                </div>
-                                <div class="form-group col-lg-9">
-                                    <label>Search Name</label>
-                                    <input type="text" class="form-control" value=""/>
                                 </div>
                                 <div class="col-lg-12">
                                     <button class="btn btn-lg btn-info col-lg-12">Search</button>
@@ -349,66 +428,19 @@
                                         <th>Ticket #</th>
                                         <th>Name</th>
                                         <th>ID Number</th>
+                                        <th>Degree Code</th>
+                                        <th>Contact Number</th>
                                         <th>Attendance</th>
                                         <th>Incentives</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="active">
-                                        <td>001</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr class="success">
-                                        <td>002</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr class="warning">
-                                        <td>003</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr class="danger">
-                                        <td>004</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr>
-                                        <td>005</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr>
-                                        <td>006</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
-                                    <tr>
-                                        <td>007</td>
-                                        <td>George Vasquez II</td>
-                                        <td>11125136</td>
-                                        <td>YES</td>
-                                        <td>None</td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#tableFormat"><i class="fa fa-cog"></i></button>
                 <div class="row pull-right">
                     <button type="button" class="btn btn-lg btn-success">Generate Attendance Letters</button>
                 </div>
@@ -467,18 +499,14 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
     <!-- DateTime Picker-->
-    <script src="datetimepicker/jquery.datetimepicker.js"></script>
+    <script src="libraries/datetimepicker/jquery.datetimepicker.js"></script>
 
     <!-- Application-->
-    <script src="application/control/tms-control.js"></script>
-    <script src="application/view/tms-view.js"></script>
-    <script src="application/model/tms-model.js"></script>
+    <script src="application/config.js"></script>
+    <script src="application/model/si-model.js"></script>
+    <script src="application/control/si-control.js"></script>
+    <script src="application/view/si-view.js"></script>
 </body>
 
 </html>
