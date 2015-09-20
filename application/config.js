@@ -7,10 +7,10 @@ Giving it a value of 1 means you are allowing it to be shown on the pages the sp
 On the other hand, giving it a value of 0 or any other value will make it unaccessible.
 */
 
-var ticketmonitoringsheet = "https://docs.google.com/spreadsheets/d/1xeNTKqhWX5LwkfAfDuoPsO7UjSQ_5mqcgg6UaiKX4f4/edit#gid=0";
+var ticketmonitoringsheet = "https://docs.google.com/spreadsheets/d/1xeNTKqhWX5LwkfAfDuoPsO7UjSQ_5mqcgg6UaiKX4f4/edit#gid=272646486";
 var lockticketmonitoringsheet = 1;
 
-var incentivesmasterlist = "https://docs.google.com/spreadsheets/d/1xeNTKqhWX5LwkfAfDuoPsO7UjSQ_5mqcgg6UaiKX4f4/edit#gid=0";
+var incentivesmasterlist = "https://docs.google.com/spreadsheets/d/1xeNTKqhWX5LwkfAfDuoPsO7UjSQ_5mqcgg6UaiKX4f4/edit#gid=272646486";
 var lockincentivesmasterlist = 1;
 
 var professorsincentiveslist = "https://docs.google.com/spreadsheets/d/1FckMvdB_uCUKbLuy0lnZWmnPbdRgqrrlfhIDjVT0kk0/edit#gid=0";

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Harlesyst</title>
+    <title>#ineng</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,6 +26,12 @@
     <!-- DateTimePicker-->
     <link href="libraries/datetimepicker/jquery.datetimepicker.css" rel="stylesheet"></script>
 
+    <!-- DateTimePicker-->
+    <link href="libraries/sweetalert/sweetalert.css" type="text/css" rel="stylesheet">
+
+    <!-- Chosen -->
+    <link href="libraries/chosen/chosen.min.css" type="text/css" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -33,6 +39,22 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+    </style>
 </head>
 
 <body>
@@ -49,7 +71,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Harlesyst</a>
+                <a class="navbar-brand" href="index.html">#ineng</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -266,57 +288,40 @@
                                 <div class="panel-body">
                                     <div class="form-group col-lg-6">
                                         <label>Show</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select class="form-control" id="showddlprof">
+                                            <option value="All">All</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>Department</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select class="form-control" id="departmentddlprof">
+                                            <option value="All">All</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>Subject</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select class="form-control" id="subjectddlprof">
+                                            <option value="All">All</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label>Section</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select class="form-control" id="sectionddlprof">
+                                            <option value="All">All</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Name</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select class="form-control" id="nameddlprof">
+                                            <option value="All">All</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-12">
+                                        <button class="btn btn-lg btn-info col-lg-12" id="searchButton2">Search</button>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-hover table-striped">
+                                            <table class="table table-bordered table-hover table-striped" id="pitable">
                                                 <thead>
                                                     <tr>
                                                         <th>Professor</th>
@@ -349,69 +354,45 @@
                             <div class="panel-body">
                                 <div class="form-group col-lg-6">
                                     <label>Show</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="showddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Show Date</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="showdateddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Professor</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="professorddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label>Subject</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="subjectddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label>Section</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="sectionddl">
+                                        <option value="All">All</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label>Search Name or ID Number</label>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="searchddl">
+                                        <option value="All">All</option>
                                     </select>
                                     <label>
-                                        <input type="checkbox" value="">Attended
+                                        <input type="checkbox" value="" id="attendedCheck" checked>Attended
                                     </label>
                                 </div>
                                 <div class="col-lg-12">
-                                    <button class="btn btn-lg btn-info col-lg-12">Search</button>
+                                    <button class="btn btn-lg btn-info col-lg-12" id="searchButton">Search</button>
                                 </div>
                             </div>
                             </div>     
@@ -422,7 +403,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
+                            <table class="table table-bordered table-hover table-striped" id="sitbl">
                                 <thead>
                                     <tr>
                                         <th>Ticket #</th>
@@ -444,6 +425,8 @@
                 <div class="row pull-right">
                     <button type="button" class="btn btn-lg btn-success">Generate Attendance Letters</button>
                 </div>
+                <table id="srsi" hidden></table>
+                <table id="srp" hidden></table>
             </div>
             <!-- /.container-fluid -->
 
@@ -501,6 +484,15 @@
 
     <!-- DateTime Picker-->
     <script src="libraries/datetimepicker/jquery.datetimepicker.js"></script>
+
+    <!-- Sheetrock -->
+    <script src="libraries/sheetrock/sheetrock.min.js"></script> 
+
+    <!-- Sweet Alert-->
+    <script src="libraries/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Chosen -->
+    <script src="libraries/chosen/chosen.jquery.min.js"></script>
 
     <!-- Application-->
     <script src="application/config.js"></script>
