@@ -2,6 +2,7 @@ $(document).ready(function(){
 	if(!isLocked("page-wrapper","page-header",lockprofessorsincentiveslist)){
 		initChosenDDL();
 		initSpreadSheetSI();
+		initSpreadSheetP();
 		$("#searchButton").click(function(){
 	        initSpreadSheetSI();
 	    }); 

@@ -1,19 +1,22 @@
 function initSpreadSheetP(){
-	var showstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
-	var departmentstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
-	var subjectstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
-	var sectionstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
-	var searchstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
-	var querystr = "SELECT * WHERE 1=1 " +showstr +departmentstr +subjectstr +sectionstr +searchstr;
+	var showstr = ($('#showddlprof').val() == "All"?"":"AND F = '" +$('#showddlprof').val() +"'");
+	var departmentstr = ($('#departmentddlprof').val() == "All"?"":" AND B = '" +$('#departmentddlprof').val() +"'");
+	var subjectstr = ($('#subjectddlprof').val() == "All"?"":" AND C = '" +$('#subjectddlprof').val() +"'");
+	var sectionstr = ($('#sectionddlprof').val() == "All"?"":" AND C = '" +$('#sectionddlprof').val() +"'");
+	var namestr = ($('#nameddlprof').val() == "All"?"":" AND A = '" + $('#nameddlprof').val() + "'");
+	var querystr = "SELECT * WHERE 1=1 " +showstr +departmentstr +subjectstr +sectionstr +namestr;
+	//fix bug happening when selecting filter and then submitting.
+	//check the displayed srp table on the screen.
 	loadingSearchButton(true,"searchButton2");
-	$('#srsi').empty();
-	$('#srsi').sheetrock({
+	$('#srp').empty();
+	$('#srp').sheetrock({
 	  url: professorsincentiveslist,
 	  query: querystr,
 	  reset: true,
 	  callback: function(error){
 	  	if(checkStatus(error)){
-		  	//copy the callback function from the initSpreadSheetSI
+		  	assignTableDataP();
+		  	fillFiltersP();	
 	  	}
 	  	loadingSearchButton(false,"searchButton2");
 	  }
@@ -37,8 +40,8 @@ function initSpreadSheetSI(){
 	  reset: true,
 	  callback: function(error){
 	  	if(checkStatus(error)){
-		  	assignTableData();
-		  	fillFilters();	
+		  	assignTableDataSI();
+		  	fillFiltersSI();	
 	  	}
 	  	loadingSearchButton(false,"searchButton");
 	  }
@@ -59,7 +62,7 @@ function initChosenDDL(){
 	$('#searchddl').chosen({width: "100%"});
 }
 
-function assignTableData(error){
+function assignTableDataSI(){
 	//to access table headers, use tablename > thead > tr > th
 	//to access table datas, use tablename > tbody > tr > td
 	studentList = [];
@@ -106,6 +109,32 @@ function assignTableData(error){
 	}
 }
 
+function assignTableDataP(){
+	professorList = [];
+	var show = $('#srp > thead > tr > th')[5].innerText;
+	$('#srp > tbody > tr').each(function(){
+		var td = $(this).find('td');
+		var professor = new Professor(show,td[0].innerText,td[1].innerText,td[2].innerText);
+		professorList.push(professor);
+	});
+
+	$('#srp > tbody').empty();
+	$('#pitable > tbody').empty();
+
+	var tbl = $('#pitable > tbody')[0];
+	var x = 0;
+	var row,cell,text;
+	for(x; x < professorList.length; x++){
+		newRow   = tbl.insertRow(tbl.rows.length);
+		cell  = newRow.insertCell(0);
+		text  = document.createTextNode(professorList[x].name); cell.appendChild(text);
+		cell  = newRow.insertCell(1);
+		text  = document.createTextNode(professorList[x].department); cell.appendChild(text);
+		cell  = newRow.insertCell(2);
+		text  = document.createTextNode(professorList[x].incentive); cell.appendChild(text);
+	}
+}
+
 function checkStatus(error){
 	if(error != null && error == "Error: Request failed."){
 		sweetAlert("Oops...", "Something went wrong with the Google Spreadsheet." , "error");
@@ -115,7 +144,7 @@ function checkStatus(error){
 	return true;
 }
 //change names here
-function fillFilters(){
+function fillFiltersSI(){
 	var x = 0;
 	var showArr = [], showdateArr = [], professorArr = [], subjectArr = [], sectionArr = [], nameidArr = [];
 	for(x; x < studentList.length; x++){
@@ -139,30 +168,45 @@ function fillFilters(){
 	}
 	$('#showdateddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
 	$('#showdateddl').append(option);$("#showdateddl").trigger("chosen:updated");option = '';
-	
-	/*for (var i=0;i<soldbyArr.length;i++){
-	   option += '<option value="'+ soldbyArr[i] + '">' + soldbyArr[i] + '</option>';
-	}
-	$('#soldbyddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
-	$('#soldbyddl').append(option);$("#soldbyddl").trigger("chosen:updated");option = '';
-	
-	for (var i=0;i<tickettypeArr.length;i++){
-	   option += '<option value="'+ tickettypeArr[i] + '">' + tickettypeArr[i] + '</option>';
-	}
-	$('#tickettypeddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
-	$('#tickettypeddl').append(option);$("#tickettypeddl").trigger("chosen:updated");option = '';
-	
-	for (var i=0;i<pricetypeArr.length;i++){
-	   option += '<option value="'+ pricetypeArr[i] + '">' + pricetypeArr[i] + '</option>';
-	}
-	$('#pricetypeddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
-	$('#pricetypeddl').append(option);$("#pricetypeddl").trigger("chosen:updated");option = '';*/
+
 	for (var i=0;i<nameidArr.length;i++){
 	   option += '<option value="'+ nameidArr[i] + '">' + nameidArr[i] + '</option>';
 	}
 	$('#searchddl').find('option').remove().end().append('<option value="All">All</option>').val('All');
 	$('#searchddl').append(option);$("#searchddl").trigger("chosen:updated");option = '';
 }
+
+function fillFiltersP(){
+	var x = 0;
+	var showArr = [], departmentArr = [], subjectArr = [], sectionArr = [], nameArr = [];
+	for(x; x < professorList.length; x++){
+		if($.inArray(professorList[x].show, showArr) == -1) showArr.push(professorList[x].show);
+		if($.inArray(professorList[x].department, departmentArr) == -1) departmentArr.push(professorList[x].department);
+		//if($.inArray(professorList[x].show, subjectArr) == -1) subjectArr.push(studentList[x].show);
+		//if($.inArray(professorList[x].show, sectionArr) == -1) sectionArr.push(studentList[x].show);
+		if($.inArray(professorList[x].name, nameArr) == -1) nameArr.push(professorList[x].name);
+	}
+	var option = '';
+
+	for (var i=0;i<showArr.length;i++){
+	   option += '<option value="'+ showArr[i] + '">' + showArr[i] + '</option>';
+	}
+	$('#showddlprof').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#showddlprof').append(option);$("#showddlprof").trigger("chosen:updated"); option = '';
+
+	for (var i=0;i<departmentArr.length;i++){
+	   option += '<option value="'+ departmentArr[i] + '">' + departmentArr[i] + '</option>';
+	}
+	$('#departmentddlprof').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#departmentddlprof').append(option);$("#departmentddlprof").trigger("chosen:updated"); option = '';
+
+	for (var i=0;i<nameArr.length;i++){
+	   option += '<option value="'+ nameArr[i] + '">' + nameArr[i] + '</option>';
+	}
+	$('#nameddlprof').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#nameddlprof').append(option);$("#nameddlprof").trigger("chosen:updated"); option = '';
+}
+
 
 function loadingSearchButton(bool,source){
 	if(bool){
