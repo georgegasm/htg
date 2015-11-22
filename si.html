@@ -417,7 +417,7 @@
                     </div>
                 </div>
                 <div class="row pull-right">
-                    <button type="button" class="btn btn-lg btn-success">Generate Attendance Letters</button>
+                    <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#tableFormat">Generate Attendance Letters</button>
                 </div>
                 <table id="srsi" hidden></table>
                 <table id="srp" hidden></table>
@@ -435,31 +435,16 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Table Format</h4>
+            <h4 class="modal-title">Generate Attendance Letters</h4>
           </div>
           <div class="modal-body">
-                <table>
-                    <tr>
-                        <th>
-                            <h4>Show</h4>
-                        </th>
-                    </tr>
-                    <tr>
-                            <td><input type="checkbox" value="" id="tncheck" checked><label for="tncheck">Ticket Number</label></td>
-                    </tr>
-                    <tr>
-                            <td><input type="checkbox" value="" id="dcheck" checked><label for="dcheck">Name</label></td>
-                    </tr>
-                    <tr>
-                            <td><input type="checkbox" value="" id="ncheck" checked><label for="ncheck">ID Number</label></td>
-                    </tr>
-                    <tr>
-                            <td><input type="checkbox" value="" id="idcheck" checked><label for="idcheck">Attendance</label></td>
-                    </tr>
-                    <tr>
-                            <td><input type="checkbox" value="" id="dccheck" checked><label for="dccheck">Incentives</label></td>
-                    </tr>
-                </table>
+                <h4>How do you want to generate the letters?</h4>
+                <button type="button" id="generateAll" class="btn btn-info">Generate All</button> Or
+                <br><br>By Professor
+                <select class="form-control" id="generateprofessordll">
+                    <option value="All">All</option>
+                </select>
+                <button type="button" id="generateSingle" class="btn btn-info">Generate</button>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
