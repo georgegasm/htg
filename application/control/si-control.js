@@ -60,6 +60,7 @@ function initChosenDDL(){
 	$('#subjectddl').chosen({width: "100%"});
 	$('#sectionddl').chosen({width: "100%"});
 	$('#searchddl').chosen({width: "100%"});
+	$('#generateprofessordll').chosen({width: "60%"});
 }
 
 function assignTableDataSI(){
@@ -254,7 +255,9 @@ function fillFiltersP(){
 	   option += '<option value="'+ nameArr[i] + '">' + nameArr[i] + '</option>';
 	}
 	$('#nameddlprof').find('option').remove().end().append('<option value="All">All</option>').val('All');
-	$('#nameddlprof').append(option);$("#nameddlprof").trigger("chosen:updated"); option = '';
+	$('#nameddlprof').append(option);$("#nameddlprof").trigger("chosen:updated"); 
+	$('#generateprofessordll').find('option').remove().end().append('<option value="All">All</option>').val('All');
+	$('#generateprofessordll').append(option);$("#generateprofessordll").trigger("chosen:updated"); option = '';
 
 	for (var i=0;i<subjectArr.length;i++){
 	   option += '<option value="'+ subjectArr[i] + '">' + subjectArr[i] + '</option>';
