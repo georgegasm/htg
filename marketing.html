@@ -250,210 +250,49 @@
                 <div class="row" id="page-header">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Show Incentives <small>Marketing</small>
+                            Marketing <small>DM For Marketing</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <a href="index.html"><i class="fa fa-dashboard"></i>Dashboard</a>
                             </li>
-                            <li>
-                                <a href="marketing.html"><i class="fa fa-ticket"></i> Marketing</a>
-                            </li>
                             <li class="active">
-                                Show Incentives
+                                Marketing
                             </li>
                         </ol>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-success">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="professorToggle">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                        Professors and Incentives  <i class="fa fa-arrow-down"></i>
-                                  </h4>
-                              </div>
-                            </a>
-                            <div id="collapseOne" class="panel-collapse collapse out">
-                                <div class="panel-body">
-                                    <div class="form-group col-lg-6">
-                                        <label>Show</label>
-                                        <select class="form-control" id="showddlprof">
-                                            <option value="All">All</option>
-                                        </select>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-pencil fa-5x"></i>
                                     </div>
-                                    <div class="form-group col-lg-6">
-                                        <label>Department</label>
-                                        <select class="form-control" id="departmentddlprof">
-                                            <option value="All">All</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <label>Subject</label>
-                                        <select class="form-control" id="subjectddlprof">
-                                            <option value="All">All</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-lg-6">
-                                        <label>Section</label>
-                                        <select class="form-control" id="sectionddlprof">
-                                            <option value="All">All</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-lg-12">
-                                        <label>Name</label>
-                                        <select class="form-control" id="nameddlprof">
-                                            <option value="All">All</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <button class="btn btn-lg btn-info col-lg-12" id="searchButton2">Search</button>
-                                    </div>
-                                    <table>
-                                    <tr>&nbsp;</tr>
-                                    </table>
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered table-hover table-striped" id="pitable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Professor</th>
-                                                        <th>Department</th>
-                                                        <th>Incentives</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" id="incentivecount">-</div>
+                                        <div>Total Incentives!</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-info">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" id="filterToggle">
-                              <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                        Filters  <i class="fa fa-arrow-down"></i>
-                                  </h4>
-                              </div>
+                            <a href="si.html">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
                             </a>
-                            <div id="collapseTwo" class="panel-collapse collapse out">
-                            <div class="panel-body">
-                                <div class="form-group col-lg-6">
-                                    <label>Show</label>
-                                    <select class="form-control" id="showddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Show Date</label>
-                                    <select class="form-control" id="showdateddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Professor</label>
-                                    <select class="form-control" id="professorddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-3">
-                                    <label>Subject</label>
-                                    <select class="form-control" id="subjectddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-3">
-                                    <label>Section</label>
-                                    <select class="form-control" id="sectionddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-12">
-                                    <label>Search Name or ID Number</label>
-                                    <select class="form-control" id="searchddl">
-                                        <option value="All">All</option>
-                                    </select>
-                                    <label>
-                                        <input type="checkbox" value="" id="attendedCheck" checked>Attended
-                                    </label>
-                                </div>
-                                <div class="col-lg-12">
-                                    <button class="btn btn-lg btn-info col-lg-12" id="searchButton">Search</button>
-                                </div>
-                            </div>
-                            </div>     
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped" id="sitbl">
-                                <thead>
-                                    <tr>
-                                        <th>Ticket #</th>
-                                        <th>Name</th>
-                                        <th>ID Number</th>
-                                        <th>Degree Code</th>
-                                        <th>Contact Number</th>
-                                        <th>Attendance</th>
-                                        <th>Incentives</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pull-right">
-                    <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#tableFormat">Generate Attendance Letters</button>
-                </div>
-                <table id="srsi" hidden></table>
-                <table id="srp" hidden></table>
             </div>
             <!-- /.container-fluid -->
-
+            <table id="srp" hidden></table>
         </div>
         <!-- /#page-wrapper -->
 
     </div>
-    <div id="tableFormat" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Generate Attendance Letters</h4>
-          </div>
-          <div class="modal-body">
-                <h4>How do you want to generate the letters?</h4>
-                <button type="button" id="generateAll" class="btn btn-info">Generate All</button> Or
-                <br><br>By Professor
-                <select class="form-control" id="generateprofessordll">
-                    <option value="All">All</option>
-                </select>
-                <button type="button" id="generateSingle" class="btn btn-info">Generate</button>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div id="content" hidden>Hi</div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -479,9 +318,9 @@
 
     <!-- Application-->
     <script src="application/config.js"></script>
-    <script src="application/model/si-model.js"></script>
-    <script src="application/control/si-control.js"></script>
-    <script src="application/view/si-view.js"></script>
+    <script src="application/model/marketing-model.js"></script>
+    <script src="application/control/marketing-control.js"></script>
+    <script src="application/view/marketing-view.js"></script>
 </body>
 
 </html>
