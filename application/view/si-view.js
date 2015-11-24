@@ -13,5 +13,8 @@ $(document).ready(function(){
 	        $child=$(this).children('div').children('h4').children('i');
 	        $child.toggleClass("fa-arrow-down").toggleClass("fa-arrow-up");
 	    });
+	    $("#generateAll").click(function(){
+	    	generateAll();
+	    });
 	}
 });
