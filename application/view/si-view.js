@@ -16,5 +16,8 @@ $(document).ready(function(){
 	    $("#generateAll").click(function(){
 	    	generateAll();
 	    });
+	    $("#generateSingle").click(function(){
+	    	generateSingle($("#generateprofessordll").val());
+	    })
 	}
 });

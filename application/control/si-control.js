@@ -49,18 +49,10 @@ function initSpreadSheetSI(){
 }
 
 function initChosenDDL(){
-	$('#showddlprof').chosen({width: "100%"});
-	$('#departmentddlprof').chosen({width: "100%"});
-	$('#subjectddlprof').chosen({width: "100%"});
-	$('#sectionddlprof').chosen({width: "100%"});
-	$('#nameddlprof').chosen({width: "100%"});
-	$('#showddl').chosen({width: "100%"});
-	$('#showdateddl').chosen({width: "100%"});
-	$('#professorddl').chosen({width: "100%"});
-	$('#subjectddl').chosen({width: "100%"});
-	$('#sectionddl').chosen({width: "100%"});
-	$('#searchddl').chosen({width: "100%"});
-	$('#generateprofessordll').chosen({width: "60%"});
+	$("#showddlprof, #departmentddlprof, #subjectddlprof, #sectionddlprof, " +
+		"#nameddlprof, #showddl, #showdateddl, #professorddl, #subjectddl, " +
+		"#sectionddl, #searchddl").chosen({width: "100%"});
+	$('#generateprofessordll').chosen({width: "69%"});
 }
 
 function assignTableDataSI(){
@@ -75,7 +67,7 @@ function assignTableDataSI(){
 			var incentivearr = td[13].innerText.split(", ");
 			var incentives = [];
 			for(var x=0;x < incentivearr.length; x++){
-				var i = new Incentive(td[0].innerText,incentivearr[x].split("-")[0],incentivearr[x].split("-")[1]);
+				var i = new Incentive(td[0].innerText,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
 				incentives.push(i);
 			}
 			var boughtformat = td[2].innerText.replace(/,/gi,'/').substr(5,10);
@@ -135,7 +127,7 @@ function assignTableDataP(){
 		var incentivearr = td[2].innerText.split(", ");
 		var incentives = [];
 		for(var x=0;x < incentivearr.length; x++){
-			var i = new Incentive(show,incentivearr[x].split("-")[0],incentivearr[x].split("-")[1]);
+			var i = new Incentive(show,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
 			incentives.push(i);
 		}
 		if($('#subjectddlprof').val() == "All" && $('#sectionddlprof').val() == "All"){
@@ -298,9 +290,60 @@ function isLocked(divID, exceptionDivID,showValue){
 function generateAll(){
 	for(var x = 0; x < professorList.length; x++){
 		var professor = professorList[x];
-
+		$('#content').html('');
 	}
 	createPDF();
+}
+
+function generateSingle(professorName){
+	if(professorName == "All")
+		generateAll();
+	else{
+		var today = new Date();
+	    var dd = today.getDate();
+	    var mm = today.getMonth()+1; //January is 0!
+	    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+	    var yyyy = today.getFullYear();
+		$('#content').html(
+		 "<b><p>" +dd +" " +months[mm] +" " +yyyy +"<h2></h2>"
+		 +'<h2></h2><h2></h2>'
+		 +"Professor Name: " +professorName +"<h2></h2>" 
+		 +"Re: Attendance List for Incentives" +"<h2></h2>" 
+		 +"</p><p>Event: " + professorList[0].show +"</b><h2></h2>"
+		 );
+		var professor;
+		for(var x = 0; x < professorList.length; x++){
+			if(professorList[x].name == professorName){
+				professor = professorList[x];
+				break;
+			}
+		}
+		var attendeesFlag = false;
+		for(var x = 0; x < professor.incentive.length; x++){
+			var profIncentive = professor.incentive[x];
+			var counter = 0;
+			for(var y = 0; y < studentList.length; y ++){
+				var student = studentList[y];
+				for(var z = 0; z < student.incentive.length; z++){
+					var studentIncentive = student.incentive[z];
+					if(studentIncentive.subject == profIncentive.subject 
+						&& studentIncentive.section == profIncentive.section){
+						if(counter == 0) $('#content').append("</p><p>"+profIncentive.subject +" - " +profIncentive.section +"</p>");
+						counter++;
+						$('#content').append(counter +".) "+student.idNumber +" - " +student.name +"<h2></h2>");
+						attendeesFlag = true;
+					}
+				}
+			}
+		}
+		$('#content').append("------------------------------------------------------------------------");
+		$('#content').append("<h2></h2><p>Thank you very much for your support. Passion Over Fame.</p>");
+		if(attendeesFlag)
+			createPDF();
+		else
+			sweetAlert("Oops...", "There are no attendees under this Professor" , "info");
+	}
 }
 
 function createPDF() {
@@ -314,7 +357,7 @@ function createPDF() {
     margins = {
         top: 80,
         bottom: 60,
-        left: 40,
+        left: 200,
         width: 522
     };
     pdf.fromHTML(
