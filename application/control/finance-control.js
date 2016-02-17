@@ -1,3 +1,5 @@
+var showDates = [];
+var boughtDates = [];
 function initSpreadSheet(){
 	loadingSearchButton(true,"soldcount");
 	$('#srtms').empty();
@@ -21,23 +23,19 @@ function assignTableData(error){
 		var td = $(this).find('td');
 		//make data dependent on the Date Bought column.
 		//include only those who have Date Bought.
-		if(td[2].innerText.length > 0){
-			
-			var boughtformat = td[2].innerText.replace(/,/gi,'/').substr(5,10);
-			boughtformat = boughtformat.replace(')','');
-			var d = new Date(boughtformat);
-			d.setMonth(d.getMonth() + 1);
-			boughtformat = (d.getMonth() +1) +'/' +d.getDate() +'/' +d.getFullYear();
-			var student = new Student(td[0].innerText,td[1].innerText,boughtformat,td[3].innerText,td[4].innerText,
-				td[5].innerText,td[6].innerText,td[7].innerText,td[8].innerText,td[9].innerText,td[10].innerText,
-				td[11].innerText,td[12].innerText,td[13].innerText);
+		if(td[2].innerHTML.length > 0){
+			var student = new Student(td[0].innerHTML,td[1].innerHTML,td[2].innerHTML.trim(),td[3].innerHTML,td[4].innerHTML,
+				td[5].innerHTML,td[6].innerHTML,td[7].innerHTML,td[8].innerHTML,td[9].innerHTML,td[10].innerHTML,
+				td[11].innerHTML,td[12].innerHTML,td[13].innerHTML);
 			studentList.push(student);
 			count++;
-
+			if($.inArray(td[2].innerHTML.trim(), boughtDates) == -1) boughtDates.push(td[2].innerHTML.trim());
 		}
+		if($.inArray(td[1].innerHTML, showDates) == -1) showDates.push(td[1].innerHTML);
 	});
 	loadingSearchButton(false,"soldcount",count);
-
+	generatePanelsTicketSoldPerShow(showDates);
+	generateTicketSalesReport(boughtDates);
 	$('#srtms > tbody').empty();
 }
 
@@ -56,4 +54,72 @@ function loadingSearchButton(bool,source,text){
 	}else{
 		$('#' +source).text(text);
 	}
+}
+
+function generatePanelsTicketSoldPerShow(showDates){
+	var ticketsSold = [];
+	for(var x = 0; x < showDates.length; x++){
+		var count = 0;
+		for(var y = 0; y < studentList.length; y++){
+			if(studentList[y].showDate == showDates[x]){
+				count++;
+			}
+		}
+		ticketsSold.push(count);
+	}
+	for(var x = 0; x < showDates.length; x++){
+		var contents = '<div class="col-lg-3 col-md-6">'
+                        +'<div class="panel panel-green">'
+                            +'<div class="panel-heading">'
+                                +'<div class="row">'
+                                    +'<div class="col-xs-3">'
+                                        +'<i class="fa fa-smile-o fa-5x"></i>'
+                                    +'</div>'
+                                    +'<div class="col-xs-9 text-right">'
+                                        +'<div class="huge" id="soldcount'+x+'">'+ticketsSold[x]+'</div>'
+                                        +'<div>'+showDates[x]+'</div>'
+                                    +'</div>'
+                                +'</div>'
+                            +'</div>'
+                            +'<a href="tms.html">'
+                                +'<div class="panel-footer">'
+                                    +'<span class="pull-left">View Details</span>'
+                                    +'<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>'
+                                    +'<div class="clearfix"></div>'
+                                +'</div>'
+                            +'</a>'
+                        +'</div>'
+                    +'</div>';
+        $("#ticketSoldPerShowDiv").append(contents);            
+    }
+}
+
+function generateTicketSalesReport(boughtDates){
+	var ticketsSold = [];
+	for(var x = 0; x < boughtDates.length; x++){
+		var count = 0;
+		var sales = 0;
+		for(var y = 0; y < studentList.length; y++){
+			if(studentList[y].dateBought == boughtDates[x]){
+				count++;
+				sales += parseInt(studentList[y].priceType);
+			}
+		}
+		ticketsSold.push([count,sales]);
+	}
+	$('#salestbl > tbody').empty();
+
+	var tbl = $('#salestbl > tbody')[0];
+	var x = 0;
+	var row,cell,text;
+	for(x; x < boughtDates.length; x++){
+		newRow   = tbl.insertRow(tbl.rows.length);
+		cell  = newRow.insertCell(0);
+		text  = document.createTextNode(boughtDates[x]); cell.appendChild(text);
+		cell  = newRow.insertCell(1);
+		text  = document.createTextNode(ticketsSold[x][0]); cell.appendChild(text);
+		cell  = newRow.insertCell(2);
+		text  = document.createTextNode(ticketsSold[x][1]); cell.appendChild(text);
+	}
+	makeTableSortable('salestbl');
 }

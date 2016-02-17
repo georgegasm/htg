@@ -5,8 +5,6 @@ function initSpreadSheetP(){
 	//var sectionstr = ($('#sectionddlprof').val() == "All"?"":" OR C LIKE '%" +$('#sectionddlprof').val() +"%'");
 	var namestr = ($('#nameddlprof').val() == "All"?"":" AND A = '" + $('#nameddlprof').val() + "'");
 	var querystr = "SELECT * WHERE 1=1 " +showstr +departmentstr /*+subjectstr +sectionstr*/ +namestr;
-	//fix bug happening when selecting filter and then submitting.
-	//check the displayed srp table on the screen.
 	loadingSearchButton(true,"searchButton2");
 	$('#srp').empty();
 	$('#srp').sheetrock({
@@ -27,8 +25,6 @@ function initSpreadSheetSI(){
 	var showstr = ($('#showddl').val() == "All"?"":"AND A = '" +$('#showddl').val() +"'");
 	var showdatestr = ($('#showdateddl').val() == "All"?"":" AND B = '" +$('#showdateddl').val() +"'");
 	var professorstr = ($('#professorddl').val() == "All"?"":" AND J = '" +$('#professorddl').val() +"'");
-	//var subjectstr = ($('#subjectddl').val() == "All"?"":" AND K = '" +$('#subjectddl').val() +"'");
-	//var sectionstr = ($('#sectionddl').val() == "All"?"":" AND E = '" +$('#sectionddl').val() +"'");
 	var searchstr = ($('#searchddl').val() == "All"?"":" AND F = '" + $('#searchddl').val().split(" - ")[0] + "'");
 	var attendedstr = ($('#attendedCheck').is(':checked')?" AND M = 'YES'":" AND M = 'NO'");
 	var querystr = "SELECT * WHERE 1=1 " +showstr +showdatestr +professorstr /*+subjectstr +sectionstr*/ +searchstr +attendedstr;
@@ -66,24 +62,27 @@ function assignTableDataSI(){
 		if(td[2].innerText.length > 0){
 			var incentivearr = td[13].innerText.split(", ");
 			var incentives = [];
+			var flag = false;
 			for(var x=0;x < incentivearr.length; x++){
 				var i = new Incentive(td[0].innerText,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
 				incentives.push(i);
 			}
-			var boughtformat = td[2].innerText.replace(/,/gi,'/').substr(5,10);
-			boughtformat = boughtformat.replace(')','');
-			var d = new Date(boughtformat);
-			d.setMonth(d.getMonth() + 1);
-			//transfer date checker here because it can't search through the query.
-			boughtformat = (d.getMonth() +1) +'/' +d.getDate() +'/' +d.getFullYear();
 			if($('#subjectddl').val() == "All" && $('#sectionddl').val() == "All"){
-				var student = new Student(td[0].innerText,td[1].innerText,boughtformat,td[3].innerText,td[4].innerText,
-					td[5].innerText,td[6].innerText,td[7].innerText,td[8].innerText,td[9].innerText,td[10].innerText,
-					td[11].innerText,td[12].innerText,incentives);
-				studentList.push(student);
+				flag = true;
 			}
 			else if(td[13].innerText.indexOf($('#subjectddl').val()) > -1 && td[13].innerText.indexOf($('#sectionddl').val()) > -1 ){
-				var student = new Student(td[0].innerText,td[1].innerText,boughtformat,td[3].innerText,td[4].innerText,
+				flag = true;
+			}
+			else if($('#subjectddl').val() != "All" && $('#sectionddl').val() == "All"){
+				if(td[13].innerText.indexOf($('#subjectddl').val()) > -1)
+					flag = true;
+			}
+			else if($('#subjectddl').val() == "All" && $('#sectionddl').val() != "All"){
+				if(td[13].innerText.indexOf($('#sectionddl').val()) > -1)
+					flag = true;
+			}
+			if(flag){
+				var student = new Student(td[0].innerText,td[1].innerText,td[2].innerText.trim(),td[3].innerText,td[4].innerText,
 					td[5].innerText,td[6].innerText,td[7].innerText,td[8].innerText,td[9].innerText,td[10].innerText,
 					td[11].innerText,td[12].innerText,incentives);
 				studentList.push(student);
@@ -117,6 +116,7 @@ function assignTableDataSI(){
 		}
 		text  = document.createTextNode(i); cell.appendChild(text);
 	}
+	makeTableSortable('sitbl');
 }
 
 function assignTableDataP(){
@@ -158,6 +158,7 @@ function assignTableDataP(){
 		}
 		text  = document.createTextNode(i); cell.appendChild(text);
 	}
+	makeTableSortable('pitable');
 }
 
 function checkStatus(error){
