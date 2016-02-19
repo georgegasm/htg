@@ -1,8 +1,6 @@
 function initSpreadSheetP(){
 	var showstr = ($('#showddlprof').val() == "All"?"":"AND F = '" +$('#showddlprof').val() +"'");
 	var departmentstr = ($('#departmentddlprof').val() == "All"?"":" AND B = '" +$('#departmentddlprof').val() +"'");
-	//var subjectstr = ($('#subjectddlprof').val() == "All"?"":" OR C LIKE '%" +$('#subjectddlprof').val() +"%'");
-	//var sectionstr = ($('#sectionddlprof').val() == "All"?"":" OR C LIKE '%" +$('#sectionddlprof').val() +"%'");
 	var namestr = ($('#nameddlprof').val() == "All"?"":" AND A = '" + $('#nameddlprof').val() + "'");
 	var querystr = "SELECT * WHERE 1=1 " +showstr +departmentstr /*+subjectstr +sectionstr*/ +namestr;
 	loadingSearchButton(true,"searchButton2");
@@ -47,7 +45,7 @@ function initSpreadSheetSI(){
 function initChosenDDL(){
 	$("#showddlprof, #departmentddlprof, #subjectddlprof, #sectionddlprof, " +
 		"#nameddlprof, #showddl, #showdateddl, #professorddl, #subjectddl, " +
-		"#sectionddl, #searchddl").chosen({width: "100%"});
+		"#sectionddl, #searchddl, #typeddlprof").chosen({width: "100%"});
 	$('#generateprofessordll').chosen({width: "69%"});
 }
 
@@ -126,14 +124,30 @@ function assignTableDataP(){
 		var td = $(this).find('td');
 		var incentivearr = td[2].innerText.split(", ");
 		var incentives = [];
+		var flag = false;
 		for(var x=0;x < incentivearr.length; x++){
-			var i = new Incentive(show,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
+			var i = new Incentive(show,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim(),incentivearr[x].split("-")[2].trim());
 			incentives.push(i);
 		}
-		if($('#subjectddlprof').val() == "All" && $('#sectionddlprof').val() == "All"){
-			var professor = new Professor(show,td[0].innerText,td[1].innerText,incentives);
-			professorList.push(professor);
-		}else if(td[2].innerText.indexOf($('#subjectddlprof').val()) > -1 && td[2].innerText.indexOf($('#sectionddlprof').val()) > -1 ){
+		var subject = $('#subjectddlprof').val();
+		var section = $('#sectionddlprof').val();
+		var type = $('#typeddlprof').val();
+		if(subject == "All" && $('#sectionddlprof').val() == "All"){
+			flag = true;
+		}else if(td[2].innerText.indexOf(subject) > -1 && td[2].innerText.indexOf(section) > -1 ){
+			flag = true;
+		}else if(subject != "All" && section == "All"){
+			if(td[2].innerText.indexOf(subject) > -1)
+				flag = true;
+		}else if(subject == "All" && section != "All"){
+			if(td[2].innerText.indexOf(section) > -1)
+				flag = true;
+		}
+		if(type != "All"){
+			if(td[2].innerText.indexOf(type) == -1)
+				flag = false;
+		}
+		if(flag){
 			var professor = new Professor(show,td[0].innerText,td[1].innerText,incentives);
 			professorList.push(professor);
 		}
@@ -169,7 +183,7 @@ function checkStatus(error){
 	}
 	return true;
 }
-//change names here
+
 function fillFiltersSI(){
 	var x = 0;
 	var showArr = [], showdateArr = [], professorArr = [], subjectArr = [], sectionArr = [], nameidArr = [];
@@ -263,7 +277,6 @@ function fillFiltersP(){
 	}
 	$('#sectionddlprof').find('option').remove().end().append('<option value="All">All</option>').val('All');
 	$('#sectionddlprof').append(option);$("#sectionddlprof").trigger("chosen:updated"); option = '';
-	
 }
 
 

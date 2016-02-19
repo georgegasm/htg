@@ -44,9 +44,10 @@ var Professor = Class({
 });
 
 var Incentive = Class({
-	initialize: function(show, subject, section){
+	initialize: function(show, subject, section, type){
 		this.show = show,
 		this.subject = subject,
 		this.section = section
+		this.type = type;
 	}
 });
