@@ -62,8 +62,10 @@ function assignTableDataSI(){
 			var incentives = [];
 			var flag = false;
 			for(var x=0;x < incentivearr.length; x++){
-				var i = new Incentive(td[0].innerText,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
-				incentives.push(i);
+				if(typeof incentivearr[x].split("-")[1] !== 'undefined'){
+					var i = new Incentive(td[0].innerText,incentivearr[x].split("-")[0].trim(),incentivearr[x].split("-")[1].trim());
+					incentives.push(i);
+				}
 			}
 			if($('#subjectddl').val() == "All" && $('#sectionddl').val() == "All"){
 				flag = true;
