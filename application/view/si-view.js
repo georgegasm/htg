@@ -14,10 +14,13 @@ $(document).ready(function(){
 	        $child.toggleClass("fa-arrow-down").toggleClass("fa-arrow-up");
 	    });
 	    $("#generateAll").click(function(){
-	    	generateAll();
+	    	generatePDF(2);
 	    });
 	    $("#generateSingle").click(function(){
-	    	generateSingle($("#generateprofessordll").val());
+	    	if($("#generateprofessordll").val() == "All")
+	    		generatePDF(2);
+	    	else
+	    		generatePDF(1);
 	    })
 	}
 });
