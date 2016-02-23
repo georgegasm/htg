@@ -27,3 +27,11 @@ function makeTableSortable(tableid){
         }
     });
 }
+
+function getProperties(prop){
+    var arr = [];
+    for(var name in prop){
+        arr.push(name);
+    }
+    console.log(arr);
+}

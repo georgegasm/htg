@@ -303,98 +303,104 @@ function isLocked(divID, exceptionDivID,showValue){
 }
 
 //Attendance Letter Generation
-function generateAll(){
-	for(var x = 0; x < professorList.length; x++){
-		var professor = professorList[x];
-		$('#content').html('');
-	}
-	createPDF();
-}
 
-function generateSingle(professorName){
-	if(professorName == "All")
-		generateAll();
-	else{
-		var today = new Date();
-	    var dd = today.getDate();
-	    var mm = today.getMonth()+1; //January is 0!
-	    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-	    var yyyy = today.getFullYear();
-		$('#content').html(
-		 "<b><p>" +dd +" " +months[mm] +" " +yyyy +"<h2></h2>"
-		 +'<h2></h2><h2></h2>'
-		 +"Professor Name: " +professorName +"<h2></h2>" 
-		 +"Re: Attendance List for Incentives" +"<h2></h2>" 
-		 +"</p><p>Event: " + professorList[0].show +"</b><h2></h2>"
-		 );
-		var professor;
+function generatePDF(type){
+	var print_professorList = [];
+	if(type == 1){
 		for(var x = 0; x < professorList.length; x++){
-			if(professorList[x].name == professorName){
-				professor = professorList[x];
+			if(professorList[x].name == $("#generateprofessordll").val()){
+				print_professorList.push(professorList[x]);
 				break;
 			}
 		}
-		var attendeesFlag = false;
-		for(var x = 0; x < professor.incentive.length; x++){
-			var profIncentive = professor.incentive[x];
-			var counter = 0;
+	}else{
+		print_professorList = professorList;
+	}
+
+    var doc = new jsPDF();
+    doc.setFontSize(font_size);
+    var yaxis = starting_yaxis;
+    for(var w = 0; w < print_professorList.length; w++){
+    	var prof = print_professorList[w];
+    	//HEADERS
+    	doc.text(starting_xaxis, starting_yaxis, dd +" " +months[mm] +" " +yyyy);
+    	yaxis += long_line_space;
+	    doc.text(starting_xaxis, yaxis,"Professor: " + prof.name);
+	    yaxis += short_line_space;
+	    doc.text(starting_xaxis, yaxis,"Re: Attendance List for Incentives");
+	    yaxis += short_line_space;
+	    doc.text(starting_xaxis, yaxis,"Event: " +prof.show);
+
+	    for(var x = 0; x < prof.incentive.length; x++){
+	    	var counter = 0;
+	    	var attendeesFlag = false;
+	    	var incentive = prof.incentive[x];
+	    	if(nextPageChecker(yaxis)){
+	    		doc.addPage();
+	    		yaxis = starting_yaxis;
+	    	}else
+	    		yaxis += long_line_space;
+
+	    	doc.text(starting_xaxis, yaxis, incentive.subject +" - " +incentive.section + " (" +incentiveType(incentive.type) +")");
+
 			for(var y = 0; y < studentList.length; y ++){
+				if(studentList[y].attendance == "NO")
+					break;
+
 				var student = studentList[y];
 				for(var z = 0; z < student.incentive.length; z++){
-					var studentIncentive = student.incentive[z];
-					if(studentIncentive.subject == profIncentive.subject 
-						&& studentIncentive.section == profIncentive.section){
-						if(counter == 0) $('#content').append("</p><p>"+profIncentive.subject +" - " +profIncentive.section +"</p>");
+					var sincentive = student.incentive[z];
+					if(sincentive.subject == incentive.subject && sincentive.section == incentive.section){
+						if(nextPageChecker(yaxis)){
+				    		doc.addPage();
+				    		yaxis = starting_yaxis;
+				    	}else
+							yaxis += short_line_space;
 						counter++;
-						$('#content').append(counter +".) "+student.idNumber +" - " +student.name +"<h2></h2>");
+						doc.text(starting_xaxis + indent_xaxis, yaxis, counter +".) "+student.idNumber +" - " +student.name);
 						attendeesFlag = true;
 					}
 				}
 			}
-		}
-		$('#content').append("------------------------------------------------------------------------");
-		$('#content').append("<h2></h2><p>Thank you very much for your support. Passion Over Fame.</p>");
-		if(attendeesFlag)
-			createPDF();
-		else
-			sweetAlert("Oops...", "There are no attendees under this Professor" , "info");
-	}
+			if(!attendeesFlag){
+				if(nextPageChecker(yaxis)){
+		    		doc.addPage();
+		    		yaxis = starting_yaxis;
+		    	}else
+					yaxis += short_line_space;
+				doc.text(starting_xaxis + indent_xaxis, yaxis, "(No attendees for this subject and section)");
+			}
+	    }
+	    if(nextPageChecker(yaxis)){
+    		doc.addPage();
+    		yaxis = starting_yaxis;
+    	}else
+			yaxis += long_line_space;
+
+		doc.text(starting_xaxis, yaxis, footer_text);
+	    
+	    if(print_professorList.length > 1){
+    	    yaxis = starting_yaxis;
+    	    doc.addPage();
+	    }
+    }
+    if(print_professorList.length > 1){
+    	doc.save('Professors Incentives.pdf');
+    }else if(print_professorList.length == 1){
+    	doc.save(print_professorList[0].name +'.pdf');
+    }else{
+    	sweetAlert("Oops...", "There are no professors found." , "info");
+    }
 }
 
-function createPDF() {
-	var pdf = new jsPDF('p', 'pt', 'letter');
-	source = $('#content')[0];
-	specialElementHandlers = {
-        '#bypassme': function (element, renderer) {
-            return true
-        }
-    };
-    margins = {
-        top: 80,
-        bottom: 60,
-        left: 200,
-        width: 522
-    };
-    pdf.fromHTML(
-	    source, // HTML string or DOM elem ref.
-	    margins.left, // x coord
-	    margins.top, { // y coord
-	        'width': margins.width, // max width of content on PDF
-	        'elementHandlers': specialElementHandlers
-    },
-    function (dispose) {
-        // dispose: object with X, Y of the last line add to the PDF 
-        //          this allow the insertion of new lines after html
-        pdf.save('Test.pdf');
-    }, margins);
+function nextPageChecker(yaxis){
+    return yaxis >= maximum_page_yaxis?true:false;
 }
-
-//DEV FUNCTIONS
-function getProperties(prop){
-	var arr = [];
-	for(var name in prop){
-		arr.push(name);
+function incentiveType(incentiveCode){
+	switch(incentiveCode){
+		case 'i1': return 'Required'; break;
+		case 'i2': return 'Alternative Class'; break;
+		case 'i3': return 'Incentive'; break;
+		case 'i4': return 'Art in Action'; break;
 	}
-	console.log(arr);
 }
